@@ -74,20 +74,16 @@ Here are the supported functions:
 #### TypeScript
 
 ```typescript
-import {
-  AudienceNetwork,
-  AD_SIZE,
-  CreateBannerOptions,
-} from "nativescript-audience-network";
+import * as AudienceNetwork from 'nativescript-audience-network';
 import { isIOS } from "tns-core-modules/platform";
 
 export class HomeComponent implements OnInit {
-  audienceNetwork: AudienceNetwork;
+
 
   ngOnInit(): void {
-    this.audienceNetwork = new AudienceNetwork();
+    
     // Init audienceNetwork SDK here.
-    this.audienceNetwork.initAds();
+    AudienceNetwork.initAds();
   }
 
   testing = true;
@@ -102,7 +98,7 @@ export class HomeComponent implements OnInit {
       testing: true,
       size: AD_SIZE.STANDARD_BANNER,
     };
-    this.audienceNetwork.createBanner(option).then(
+    AudienceNetwork.createBanner(option).then(
       () => (this.message = "Banner created"),
       (error) => (this.message = "Error creating banner: " + error)
     );
@@ -138,15 +134,15 @@ Use this for instance while loading your view, so it's ready for the moment you 
 
 
 
-```js
+```typescript
 preloadInterstitial(){
     let option: CreateInterstitialOptions = {
             "androidInterstitialId": "<Your audience network Interstitial id>",
             "testing": true,
-            "onAdClosed": this.onInterstitialClosed,
-            "onAdClicked": this.onInterstitialClicked
+            "onAdClosed": this.onInterstitialClosed.bind(this),
+            "onAdClicked": this.onInterstitialClicked.bind(this)
     }
-    this.audienceNetwork.preloadInterstitial(option).then(
+    AudienceNetwork.preloadInterstitial(option).then(
      ()=> {
       console.log(
         "interstitial preloaded - you can now call 'showInterstitial' whenever you're ready to do so"
@@ -171,9 +167,9 @@ At any moment after `preloadInterstitial` successfully resolves, you can call `s
 
 Note that when you want to use `showInterstitial` again, you also have to use `preloadInterstitial` again because those ads can't be reused.
 
-```js
+```typescript
  showInterstitial(){
-    this.audienceNetwork.showInterstitial()
+    AudienceNetwork.showInterstitial()
  }
 
 ```
@@ -182,12 +178,12 @@ Note that when you want to use `showInterstitial` again, you also have to use `p
 
 Use this for instance while loading your view, so it's ready for the moment you want to actually show it (by calling `showRewardedVideoAd`).
 
-```js
+```typescript
  preloadRewardedVideoAd(){
-   let option = {
-            androidAdPlacementId: "<Your audience network RewardedVideo id>"
-        }
-    this.audienceNetwork.preloadRewardedVideoAd(option).then(()=> {
+    let option = {
+      androidAdPlacementId: "<Your audience network RewardedVideo id>"
+    }
+    AudienceNetwork.preloadRewardedVideoAd(option).then(()=> {
       console.log(
         "RewardedVideoAd preloaded - you can now call 'showRewardedVideoAd' whenever you're ready to do so"
       );
@@ -207,24 +203,24 @@ Note that when you want to use `showRewardedVideoAd` again, you also have to use
 
 onRewarded is probably the only callback you need to worry about.
 
-```js
+```typescript
  showRewardedVideoAd(){
    let option: ShowRewardedOptions = {
-           "onRewardedVideoAdClosed":this.onRewardedVideoAdClosed,
-           "onRewardedVideoAdOpened":this.onRewardedVideoAdOpened,
-           "onRewardedVideoCompleted":this.onRewardedVideoCompleted,
+        "onRewardedVideoAdClosed":this.onRewardedVideoAdClosed.bind(this),
+        "onRewardedVideoAdOpened":this.onRewardedVideoAdOpened.bind(this),
+        "onRewardedVideoCompleted":this.onRewardedVideoCompleted.bind(this),
 
-        }
-        this.audienceNetwork.showRewardedVideoAd(option)
+      }
+    AudienceNetwork.showRewardedVideoAd(option)
  }
   onRewardedVideoAdClosed(){
-        console.log("onRewardedVideoAdClosed")
-    }
+    console.log("onRewardedVideoAdClosed")
+  }
 
-    onRewardedVideoAdOpened(){
-        console.log("reward clicked")
-    }
-    onRewardedVideoCompleted(){
-        console.log("reward complete")
-    }
+  onRewardedVideoAdOpened(){
+    console.log("reward clicked")
+  }
+  onRewardedVideoCompleted(){
+    console.log("reward complete")
+  }
 ```
