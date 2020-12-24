@@ -23,8 +23,6 @@ function _getActivity() {
 
 export function initAds() {
     try {
-
-        // console.log("ctx", _getActivity())
         com.facebook.ads.AudienceNetworkAds.initialize(_getActivity());
         console.log("AudienceNetworkAds initialized");
 
@@ -234,10 +232,6 @@ export function preloadRewardedVideoAd(arg) {
                     if (fbAd.rewardVideoView) {
                         fbAd.rewardVideoView = null;
                     }
-        // console.log("_this", _this)
-                    
-                    // console.log("onRewardedVideoAdClosed call",rewardedVideoCallbacks.onRewardedVideoAdClosed)
-                    // console.log("onRewardedVideoAdClosed call",rewardedVideoCallbacks.onRewardedVideoAdClosed())
                     rewardedVideoCallbacks.onRewardedVideoAdClosed();
 
                 },
@@ -267,10 +261,6 @@ export function preloadRewardedVideoAd(arg) {
                 fbAd.rewardVideoView.buildLoadAdConfig()
                     .withAdListener(rewardedVideoAdListener)
                     .build());
-            // fbAd.interstitialView.setAdListener(new InterstitialAdListener());
-
-            // var ad = fbAd._buildAdRequest(settings);
-            // fbAd.interstitialView.loadAd(ad);
         } catch (ex) {
             console.log("Error in fbAd.preloadInterstitial: " + ex);
             reject(ex);

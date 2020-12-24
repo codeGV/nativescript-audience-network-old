@@ -4,7 +4,7 @@ import { Common } from './audience-network.common';
 
 declare module "nativescript-audience-network" {
 
-  export function initAds(__this:any): void;
+  export function initAds(): void;
   export function createBanner(option: CreateBannerOptions): Promise<any>;
   export function preloadInterstitial(option: CreateInterstitialOptions): Promise<any>;
   export function showInterstitial(): Promise<any>;

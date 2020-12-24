@@ -1,6 +1,6 @@
 {
 	"name": "nativescript-audience-network",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Your awesome NativeScript plugin.",
 	"main": "audience-network",
 	"typings": "index.d.ts",
